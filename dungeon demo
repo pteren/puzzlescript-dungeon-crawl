@@ -1,0 +1,430 @@
+title Dungeon Demo
+author Pteren
+homepage www.puzzlescript.net
+again_interval 0.06
+
+verbose_logging
+
+norepeat_action
+
+========
+OBJECTS
+========
+
+1HP
+red black
+.....
+01111
+.....
+.....
+.....
+
+2HP
+orange black
+.....
+00111
+.....
+.....
+.....
+
+3HP
+yellow black
+.....
+00011
+.....
+.....
+.....
+
+4HP
+lightgreen black
+.....
+00001
+.....
+.....
+.....
+
+5HP
+green black
+.....
+00000
+.....
+.....
+.....
+
+player_destination
+transparent
+
+Damage
+transparent
+
+Healing
+transparent
+
+PCaura
+transparent
+
+victory
+transparent
+
+Shadows
+black
+
+Shadowtemp
+black
+0.0.0
+.0.0.
+0.0.0
+.0.0.
+0.0.0
+
+Background
+#655e58 #423e3a #4c453f #53514e #3a3736 #040403
+41421
+23042
+42143
+12302
+21243
+
+staircase_top
+#a0a0a0 #909090 #808080 #707070 #606060 #303030
+.....
+.....
+0....
+01...
+012..
+
+staircase
+#a0a0a0 #909090 #808080 #707070 #606060 #303030
+0123.
+51234
+55234
+55534
+55554
+
+rock1_top
+#858585 #757575 #656565 #4a4a4a
+.....
+.....
+20123
+12002
+30101
+
+rock1
+#858585 #757575 #656565 #505050 #404040 #303030 #202020 #101010 #000000 #4a4a4a
+29129
+32221
+33444
+55566
+87776
+
+skull_gate_top
+#858585 #757575 #656560 #4a4a4a #b8b4ae #c9c4bb #a6a4a1
+.....
+.....
+20123
+12002
+35401
+
+skull_gate
+#858585 #757575 #a6a4a1 #ad8a21 #303030 #202020 #101010 #b8b4ae #575045 #c9c4bb
+97772
+73737
+77772
+42625
+66665
+
+skull_gate_ruins
+#c9c4bb #b8b4ae #a89e8d #a6a4a1 #707070 #606060 #454545
+..43.
+30231
+14.05
+.1051
+.3...
+
+skull_gate_token
+transparent
+
+Player_top
+red darkred #101010 #202020 #303030 #404040
+.....
+.....
+.101.
+11011
+12021
+
+Player
+red darkred #101010 #202020 #303030 #404040
+13431
+11511
+.1.1.
+.....
+.....
+
+dead_player
+red darkred
+.....
+.11..
+1011.
+1.0.1
+.1...
+
+Knight
+blue black darkgray darkblue
+1...1
+11311
+20102
+.212.
+.212.
+
+Skeleton2_top
+#f7ead5 #e6dbca black #575045
+.....
+.....
+.100.
+10000
+12020
+
+Skeleton2
+#f7ead5 #e6dbca black #575045
+00000
+.030.
+.....
+.....
+.....
+
+Skeleton1_top
+#f7ead5 #e6dbca black #575045 #6b6357
+.....
+.....
+.10..
+1040.
+12040
+
+Skeleton1
+#f7ead5 #e6dbca black #575045 #6b6357
+00000
+.031.
+.....
+.....
+.....
+
+dead_skeleton
+#f7ead5 #e6dbca #a89e8d
+.02.1
+1..0.
+.10.1
+.....
+.....
+
+health_potion
+gray lightblue lightbrown brown red darkred
+.233.
+.120.
+1.440
+14550
+.100.
+
+
+(TODO:
+Maintenence
+- Make walls shorter
+- Give health potion some height
+- Make floor more distinct
+- Fix monsters wearing the player's hat
+Game Design
+- Play Rust Bucket
+  - monsters which move every other turn
+  - monsters which spend a turn to *turn*
+  - monsters which move diagonally?
+  - ranged weapons
+- Add staircase and skull gate to every level
+- Create doors and keys
+- Make skeletons start hovering and get green eyes when they are awakened
+
+
+
+
+
+)
+
+=======
+LEGEND
+=======
+. = Background and Shadows
+# = rock1 and Shadows
+% = skull_gate and Shadows
+> = staircase and Shadows
+
+P = Player and Shadows
+S = Skeleton2 and Shadows
+K = Knight and Shadows
+
+! = health_potion and Shadows
+
+top = rock1_top or skull_gate_top or Player_top or staircase_top or Skeleton2_top or Skeleton1_top
+wall = rock1 or skull_gate or staircase
+
+Skeleton = Skeleton1 or Skeleton2
+
+friendly = player
+hostile = Skeleton or Knight
+npc = hostile
+
+solid = wall or npc or Player
+
+pickup = health_potion
+
+token = skull_gate_token or victory
+
+hitpoints = 1HP or 2HP or 3HP or 4HP or 5HP
+
+=======
+SOUNDS
+=======
+
+sfx1 2648708  (Shadows whoosh)
+sfx2 27815101 (Player hurt)
+sfx3 95858901 (Skeleton hurt)
+sfx4 68643303 (Health potion pickup)
+sfx5 15036708 (Skull gate collapses)
+sfx6 46839308 (Player ascends staircase)
+
+
+
+
+sfx10 83015308 (fart sound :O)
+================
+COLLISIONLAYERS
+================
+
+Background (The floor)
+dead_player, dead_skeleton, skull_gate_ruins (Decorations and objects that can be stepped over)
+pickup (Items the player can ineteract with)
+solid (The player, walls, and npcs)
+top (Things which are rendered in front of the player)
+PCaura (Special layer for the player's invisible smell)
+Healing (combat counters)
+Damage (combat counters)
+hitpoints (health display)
+player_destination (player movement mechanics)
+token (any other markers which happen to be compatible)
+Shadows, Shadowtemp (Shadow animation at the start of the level covers everything)
+
+======
+RULES	 
+======
+
+(Shadow clear animation)
+[Shadows Player]->[Shadowtemp stationary Player] sfx1
+[Shadowtemp]->[]
+[no Shadows no Shadowtemp|Shadows]->[|Shadowtemp] again
+
+(Find out where the player will end up at the end of the turn)
+[stationary Player]->[stationary Player player_destination]
+[action Player]->[action Player player_destination]
+[> Player|hostile]->[> Player player_destination|hostile] (Assuming no enemy will ever flee the player)
+[> Player|stationary solid]->[> Player player_destination|stationary solid]
+
+[> Player no player_destination|]->[> Player|player_destination]
+
+late [player_destination]->[]
+
+(3D Graphics)
+up[rock1|no top]->[rock1|rock1_top]
+up[skull_gate|no top]->[skull_gate|skull_gate_top]
+up[staircase|no top]->[staircase|staircase_top]
+
+late up[Player|no top]->[Player|Player_top]
+late up[Skeleton2|no top]->[Skeleton2|Skeleton2_top]
+
+late up[no solid|top]->[|]
+
+(Health potions)
+[Player|player_destination health_potion]->[player Healing|player_destination Healing]
+
+(Player's Aura - allows monsters to see around corners)
+late [PCaura]->[no PCaura]
+late [no PCaura|Player]->[PCaura|Player]
+
+[> Player|PCaura]->[> Player|] (Removes the aura in front of the player to prevent monsters from moving into that space before the player has a chance to move)
+
+(Skeletons)
+[Skeleton|Player] -> [> Skeleton|Player] (Skeleton follows player)
+[Skeleton|PCaura no wall no npc] -> [> Skeleton|PCaura] (Skeleton can sense the player)
+
+[> Player|Skeleton1]->[Player|dead_skeleton] sfx3 (Skeleton is attacked)
+[> Player|Skeleton2]->[Player|Skeleton1] sfx3
+
+[> Skeleton|Player player_destination]->[> Skeleton Damage|Player player_destination] (Skeleton attacks)
+[Skeleton|player_destination]->[stationary Skeleton Damage|player_destination] (Moving next to a skeleton results in an attack of opportunity)
+
+[skull_gate]->[skull_gate skull_gate_token] (Marks each skull_gate for destruction if there are no skeletons)
+[Skeleton][skull_gate_token]->[Skeleton][]
+late[skull_gate skull_gate_token|skull_gate_top]->[skull_gate_ruins|] sfx5
+
+(Hitpoints, damage and death)
+up [Shadows][Player|no hitpoints]->[Shadows][Player|5HP]
+[moving Player no player_destination|hitpoints]->[moving Player|moving hitpoints]
+
+[Damage][Healing]->[][] (Damage and healing cancel out)
+
+late [1HP][Healing]->[2HP][] sfx4 (Increment HP at end of turn if healing has been applied)
+late [2HP][Healing]->[3HP][] sfx4
+late [3HP][Healing]->[4HP][] sfx4
+late [4HP][Healing]->[5HP][] sfx4
+late [5HP][Healing]->[5HP][] sfx4
+
+late [5HP][Damage]->[4HP][] sfx2 (Decrement HP at end of turn if damage has been applied)
+late [4HP][Damage]->[3HP][] sfx2
+late [3HP][Damage]->[2HP][] sfx2
+late [2HP][Damage]->[1HP][] sfx2
+late [1HP][Damage]->[][]	sfx2
+
+late up [Player|no hitpoints]->[dead_player|] (Detect and trigger player death)
+
+(victory)
+[> Player|staircase]->[> Player|staircase victory] sfx6
+
+==============
+WINCONDITIONS
+==============
+
+any victory
+no dead_player
+
+=======	 
+LEVELS
+=======
+
+#########
+#########
+#.P.##..#
+#....S..#
+#%###.#.#
+#..#..S.#
+#>.#....#
+#########
+
+#########
+#..S...!#
+#.......#
+#.#..S..#
+#S......#
+#.....#.#
+#.P.....#
+####%####
+...#.#...
+...#>#...
+...###...
+
+###########
+#.#S#.#S#!#
+#.........#
+#.#!###S#.#
+#.#..P..#.#
+#.#S###!#.#
+#.........#
+#!#S#.#S#.#
+#####%#####
+#>........#
+###########
